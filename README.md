@@ -23,6 +23,17 @@ The **Sugarizer School Portal Server** uses **Sugarizer Chart** to install a dep
 
 [**Sugarizer School Portal Chart**](https://github.com/nikhilm98/sugarizer-school-portal-chart) is a [Helm](https://helm.sh/) Chart for setting up [Sugarizer School Portal Server](https://github.com/nikhilm98/sugarizer-school-portal-server) deployment on a Kubernetes cluster. You can deploy Sugarizer School Portal Server instance by editing the values of the YAML file and running simple `helm install` command. The Sugarizer School Portal Server instance can be accessed from the browser by opening the `hostName` URL.
 
-The **Sugarizer School Portal Chart** also contains a set of [scripts](https://github.com/NikhilM98/sugarizer-school-portal-chart/tree/master/scripts) which can be used to set up the **Sugarizer School Portal Environment** with a simple `sh setup.sh` command.
-
 The **Sugarizer School Portal Server** uses [**nodejs-helm**](https://www.npmjs.com/package/nodejs-helm) to interact with the Helm process. It is an [npm package](https://www.npmjs.com) which is a wrapper that integrates with the helm.sh process. The repository for the project is available on the [GitHub](https://github.com/) as [nikhilm98/nodejs-helm](https://github.com/NikhilM98/nodejs-helm).
+
+## Setup
+The [Sugarizer School Portal](https://github.com/NikhilM98/sugarizer-school-portal) also contains a set of [scripts](https://github.com/NikhilM98/sugarizer-school-portal/blob/master/scripts) which can be used to install dependencies, set-up the cluster environment and install the Sugarizer School Portal Chart on your GKE Cluster with a simple `sh setup.sh` command.
+
+You can read more about the setup process in this [documentation](https://github.com/NikhilM98/sugarizer-school-portal/blob/master/scripts/README.md).
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+This project is licensed under `Apache v2` License. See [LICENSE](LICENSE) for full license text.
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)

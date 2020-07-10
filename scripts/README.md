@@ -8,8 +8,11 @@ Currently the setup only supports GKE Cluster.
 Navigate into scripts directory and run `sh setup.sh` from your terminal to set-up the environment for Sugarizer School Portal on the cluster.
 
 ```bash
+# Clone the repository
+git clone git@github.com:NikhilM98/sugarizer-school-portal.git
+
 # Navigate into scripts directory
-cd scripts
+cd sugarizer-school-portal/scripts
 
 # Execute setup script
 sh setup.sh
