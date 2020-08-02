@@ -1,7 +1,22 @@
-sspNamespace: schoolportal
-hostName: sugarizer.tools
-host: sugarizer.tools
-databaseUrl: mymongodb
-replicaset: true
-gcpProjectId: gcpProjectId
-clouddns: yourCloudDnsKeyInBase64
+sspNamespace: schoolportal # No need to change
+hostName: sugarizer.tools # The domain on which SSP will be accessible
+deployment:
+    host: sugarizer.tools # The domain on which subdomains will be created for Sugarizer Server deployments.
+    https: true # Options: true (default), false. The value will be overwritten with -s flag
+database:
+    databaseUrl: mymongodb # No need to change
+    replicaset: true # No need to change
+cluster: # Not required if HTTPS is false.
+    provider: azure # Options: gke, azure
+    # If provider is gke
+    gcpProjectId: null
+    gcpServiceAccount: null
+    # If provider is azure
+    azureClientSecret:  null
+    azureSPAppId: null
+    azureSubscriptionId: null
+    azureTenantId: null
+    azureDnsZoneResourceGroup: null
+    azureDnsZone: null
+webhook: # Optional
+    slackWebhookUrl: null

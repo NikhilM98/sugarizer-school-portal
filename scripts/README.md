@@ -1,11 +1,15 @@
 # Sugarizer School Portal Setup
 
-A complete Setup Script for Sugarizer School Portal dependencies, environment, and the helm chart.    
-Currently the setup only supports GKE Cluster.
+A complete Setup Script for Sugarizer School Portal dependencies, environment, and the helm chart.
+
+## Provider Support
+Sugarizer School Portal Chart supports two providers:
+- [Azure Kubernetes Service](https://azure.microsoft.com/en-in/services/kubernetes-service/) (AKS)
+- [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine) (GKE)
 
 ## Instructions
 
-Navigate into scripts directory and run `sh setup.sh` from your terminal to set-up the environment for Sugarizer School Portal on the cluster.
+Navigate into scripts directory and run `sh setup.sh -p <provider> -s <true/false>` from your terminal to set-up the environment for Sugarizer School Portal on the cluster.
 
 ```bash
 # Clone the repository
@@ -15,17 +19,16 @@ git clone git@github.com:NikhilM98/sugarizer-school-portal.git
 cd sugarizer-school-portal/scripts
 
 # Execute setup script
-sh setup.sh
+sh setup.sh -p <provider> -s <true/false>
 ```
+
+**Provider (-p) :** Cloud provider for the Kubernetes Cluster. Options: `azure`, `gke`.
+**SSL (-s) :** Whether to install HTTPS components. Options: `true`, `false`.
 
 After setting up the environment, the setup will pause.
 Navigate to the repository root, update the chart [ssp-values.yaml](charts/ssp-values.yaml) file.
 
-Put the `gcpProjectId` and `clouddns` value in the [ssp-values.yaml](charts/ssp-values.yaml) file.
-
-**gcpProjectId:** The Project ID of the project on Google Cloud Platform.
-
-**clouddns:** Your service account key in base64 format.
+Update the `hostName` and `deployment.host` values in the [ssp-values.yaml](charts/ssp-values.yaml) file. You don't need to update the `cluster` values if you have set SSL (-s) to `false` (`sh setup.sh -p <provider> -s false`).
 
 You can look at this [documentation](https://github.com/nikhilm98/sugarizer-school-portal-chart/#edit-default-values) for more info about the supported values. 
 
@@ -38,17 +41,18 @@ Note: Point the Address (`A`) Record of your Cloud DNS zone to the Cluster IP of
 ## Usage
 
 The setup checks and installs these prerequisites if they're not already present:
-- [GCloud](https://cloud.google.com/sdk)
+- [GCloud](https://cloud.google.com/sdk) - (If provider is `gke`)
+- [Azure CLI](https://docs.microsoft.com/bs-latn-ba/cli/azure) - (If provider is `azure`)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [Git](https://git-scm.com/)
-- [Curl](https://curl.haxx.se/) - If required
-- [GnuPG](https://gnupg.org/) - If required
+- [Curl](https://curl.haxx.se/) - (If required)
+- [GnuPG](https://gnupg.org/) - (If required)
 - [Helm 3](https://helm.sh/)
 
 It then checks and installs the required Helm charts:
 - [MongoDB Replicaset](https://github.com/helm/charts/tree/master/stable/mongodb-replicaset) as `mymongodb` in `default` namespace.
-- [Kubernetes-Reflector](https://github.com/emberstack/kubernetes-reflector) as `reflector` in `default` namespace.
+- [Kubernetes-Reflector](https://github.com/emberstack/kubernetes-reflector) as `reflector` in `default` namespace. - (If SSL is `true`)
 - [NGINX Ingress Controller](https://github.com/nginxinc/kubernetes-ingress/) as `ingress-nginx` in `default` namespace.
-- [Cert-Manager](https://cert-manager.io/docs/) as `cert-manager` in `cert-manager` namespace.
+- [Cert-Manager](https://cert-manager.io/docs/) as `cert-manager` in `cert-manager` namespace. - (If SSL is `true`)
 
 It then checks and installs [Sugarizer School Portal Helm Chart](https://github.com/NikhilM98/sugarizer-school-portal-chart) if everything is fine.
