@@ -7,16 +7,30 @@ database:
     databaseUrl: mymongodb # No need to change
     replicaset: true # No need to change
 cluster: # Not required if HTTPS is false.
-    provider: azure # Options: gke, azure
+    provider: azure # Provier will be overwritten by setup. Options: gke, azure, aws
     # If provider is gke
     gcpProjectId: null
     gcpServiceAccount: null
     # If provider is azure
-    azureClientSecret:  null
+    azureClientSecret: null
     azureSPAppId: null
     azureSubscriptionId: null
     azureTenantId: null
     azureDnsZoneResourceGroup: null
-    azureDnsZone: null
+    azureDnsZone: sugarizer.tools
+    # If provider is aws
+    awsClientSecret: null
+    awsRegion: null
+    awsAccessKeyId: null
+    awsRole: null # set it to null if you don't have one
+    awsDnsZone: sugarizer.tools
+verification: # Optional
+    enabled: false # Set it to true to enable client email validation
+    smtpPort: 465
+    smtpHost: smtp.example.com
+    smtpTlsSsecure: true
+    smtpUser: null
+    smtpPass: null
+    smtpEmail: email@smtp.example.com
 webhook: # Optional
     slackWebhookUrl: null

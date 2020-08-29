@@ -40,6 +40,8 @@ elif [ "$provider" = "gke" ]; then # provider is set to gke
     printf "${YELLOW}\nProvider (-p) is set to ${BLUE}$provider${YELLOW}.\n${NC}";
 elif [ "$provider" = "azure" ]; then # provider is set to azure
     printf "${YELLOW}\nProvider (-p) is set to ${BLUE}$provider${YELLOW}.\n${NC}";
+elif [ "$provider" = "aws" ]; then # provider is set to aws
+    printf "${YELLOW}\nProvider (-p) is set to ${BLUE}$provider${YELLOW}.\n${NC}";
 else # provider has unaccepted input
     printf "${RED}\nSetup Aborted | Provider (-p) has unaccepted input ${YELLOW}'$provider'${RED}.\n${NC}";
     exit 1;

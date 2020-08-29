@@ -34,6 +34,13 @@ azure_instructions() {
     printf ${NC};
 }
 
+aws_instructions() {
+    printf ${YELLOW};
+    printf "\nPlease run:\n    $ aws configure\nto configure the AWS CLI.\n";
+    printf "\nAfter that, to connect with your cluster, please run:\n    $ aws eks --region <region> update-kubeconfig --name <cluster_name>\n\n";
+    printf ${NC};
+}
+
 if [ -z ${provider+x} ]; then # provider is not set
     printf "${RED}\nSetup Aborted | Provider (-p) is not set.\n${NC}";
     exit 1;
@@ -61,6 +68,51 @@ elif [ "$provider" = "azure" ]; then # provider is set to azure
         az aks install-cli;
         printf "${RED}\nSetup Aborted | Login to Azure CLI to continue.\n${NC}";
         azure_instructions;
+        exit 1;
+    }
+elif [ "$provider" = "aws" ]; then # provider is set to aws
+    command -v kubectl >/dev/null 2>&1 || {
+        printf >&2 "${BLUE}Installing Kubectl...\n${NC}";
+        apt update && apt install -y apt-transport-https gnupg2;
+        command -v curl >/dev/null 2>&1 || {
+            printf >&2 "${BLUE}Installing Curl...\n${NC}";
+            apt update && apt -y install curl;
+        }
+
+        curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -;
+        echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list;
+        apt update & apt-get install -y kubectl;
+    }
+    command -v aws >/dev/null 2>&1 || {
+        printf >&2 "${BLUE}Installing AWS CLI...\n${NC}";
+        command -v curl >/dev/null 2>&1 || {
+            printf >&2 "${BLUE}Installing Curl...\n${NC}";
+            apt update && apt -y install curl;
+        }
+        command -v unzip >/dev/null 2>&1 || {
+            printf >&2 "${BLUE}Installing Unzip...\n${NC}";
+            apt update && apt -y install unzip;
+        }
+
+        architecture=""
+        case $(uname -m) in
+            i386)   architecture="386";;
+            i686)   architecture="386";;
+            x86_64) architecture="amd64";;
+            arm)    architecture="arm";;
+        esac
+
+        if [ "$architecture" = "arm" ]; then
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            ./aws/install
+        else
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            ./aws/install
+        fi
+        printf "${RED}\nSetup Aborted | Configure AWS CLI to continue.\n${NC}";
+        aws_instructions;
         exit 1;
     }
 else # provider has unaccepted input
@@ -94,6 +146,8 @@ kubectl get pods >/dev/null 2>&1 || {
         gcloud_instructions;    
     elif [ "$provider" = "azure" ]; then
         azure_instructions;
+    elif [ "$provider" = "aws" ]; then
+        aws_instructions;
     fi
     exit 1;
 }

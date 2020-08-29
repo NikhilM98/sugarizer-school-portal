@@ -18,7 +18,6 @@ do
     esac
 done
 
-
 cmd="helm install ssp ssp/school-portal-chart -f charts/ssp-values.yaml";
 
 if [ -z ${provider+x} ]; then # provider is not set
@@ -27,6 +26,8 @@ elif [ "$provider" = "gke" ]; then # provider is set to gke
     cmd="$cmd --set cluster.provider=gke";
 elif [ "$provider" = "azure" ]; then # provider is set to azure
     cmd="$cmd --set cluster.provider=azure";
+elif [ "$provider" = "aws" ]; then # provider is set to aws
+    cmd="$cmd --set cluster.provider=aws";
 else # provider has unaccepted input
     printf "${RED}\nSetup Aborted | Provider (-p) has unaccepted input ${YELLOW}'$provider'${RED}.\n${NC}";
     exit 1;

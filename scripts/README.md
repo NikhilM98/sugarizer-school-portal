@@ -3,7 +3,8 @@
 A complete Setup Script for Sugarizer School Portal dependencies, environment, and the helm chart.
 
 ## Provider Support
-Sugarizer School Portal Chart supports two providers:
+Sugarizer School Portal Chart supports three providers:
+- [Amazon Elastic Kubernetes Service](https://aws.amazon.com/eks/) (Amazon EKS)
 - [Azure Kubernetes Service](https://azure.microsoft.com/en-in/services/kubernetes-service/) (AKS)
 - [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine) (GKE)
 
@@ -20,6 +21,8 @@ cd sugarizer-school-portal/scripts
 
 # Execute setup script
 sh setup.sh -p <provider> -s <true/false>
+
+# <providers> can be aws/azure/gke 
 ```
 
 **Provider (-p) :** Cloud provider for the Kubernetes Cluster. Options: `azure`, `gke`.
@@ -29,6 +32,8 @@ After setting up the environment, the setup will pause.
 Navigate to the repository root, update the chart [ssp-values.yaml](charts/ssp-values.yaml) file.
 
 Update the `hostName` and `deployment.host` values in the [ssp-values.yaml](charts/ssp-values.yaml) file. You don't need to update the `cluster` values if you have set SSL (-s) to `false` (`sh setup.sh -p <provider> -s false`).
+
+If you want client email validation in the Sugarizer School Portal deployment, set `verification.enabled` to `true` and fill the SMTP server details in the following sub-fields.
 
 You can look at this [documentation](https://github.com/nikhilm98/sugarizer-school-portal-chart/#edit-default-values) for more info about the supported values. 
 
@@ -43,6 +48,7 @@ Note: Point the Address (`A`) Record of your Cloud DNS zone to the Cluster IP of
 The setup checks and installs these prerequisites if they're not already present:
 - [GCloud](https://cloud.google.com/sdk) - (If provider is `gke`)
 - [Azure CLI](https://docs.microsoft.com/bs-latn-ba/cli/azure) - (If provider is `azure`)
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html) - (If provider is `aws`)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [Git](https://git-scm.com/)
 - [Curl](https://curl.haxx.se/) - (If required)
