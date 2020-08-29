@@ -1,4 +1,3 @@
-# Default values for mgob.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 # Note that two backup plans are provided as templates - they contain dummy values and should be changed before
@@ -51,11 +50,19 @@ configMap:
         retention: 14
         timeout: 60
       gcloud:
-        bucket: "ssp-backup"
-        keyFilePath: /secret/service-acc-secret/key.json
-secret:
+        bucket: "BucketName"
+        keyFilePath: /secret/service-acc-secret/service-account.json
+      s3:
+        url: "https://s3.region.amazonaws.com"
+        bucket: "BucketName"
+        accessKey: "AccessKey"
+        secretKey: "SecretKey"
+        api: "S3v4"
+      azure:
+        containerName: "ContainerName"
+        connectionString: "ConnectionString"
+secret: # Will be mainly required for GCloud Storage
   - name: service-acc-secret
-
 ## You can either insert your secret values as part of helm values, or refer externally created secrets.
 #- name: gcp-example-secret-name
 #- name: gcp-example-secret-name-with-values

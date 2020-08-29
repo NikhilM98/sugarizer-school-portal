@@ -1,10 +1,9 @@
 # Sugarizer School Portal
-
 [**Sugarizer**](https://github.com/llaske/sugarizer) is the open-source learning platform based on Sugar that began in the famous One Laptop Per Child project.
 
 [**Sugarizer Server**](https://github.com/llaske/sugarizer-server) allows the deployment of Sugarizer on a local server, for example on a school server, so expose Sugarizer locally as a Web Application. Sugarizer Server can also be used to provide collaboration features for Sugarizer Application on the network. Sugarizer Server could be deployed in a Docker container or on any computer with Node.js 6+ and MongoDB 2.6+.
 
-**Sugarizer School Portal** is a new tool in the Sugarizer family which provides a way for schools interested by Sugarizer to host and manage themselves their Sugarizer deployment. It provides an on-demand (SaaS) Sugarizer Server deployment tool so that every school will be able to create a Sugarizer Server to host its own deployment without any technical skill in just a few clicks.
+**Sugarizer School Portal** is a new tool in the Sugarizer family which was created as a part of **Google Summer of Code 2020** program. It provides a way for schools interested by Sugarizer to host and manage themselves their Sugarizer deployment. It provides an on-demand (SaaS) Sugarizer Server deployment tool so that every school will be able to create a Sugarizer Server to host its own deployment without any technical skill in just a few clicks.
 
 Under the hood, Sugarizer School Portal is a [Kubernetes](https://kubernetes.io/) cluster that is able to create/manage on-demand new Sugarizer Server instances.
 
@@ -31,21 +30,17 @@ The [Sugarizer School Portal](https://github.com/NikhilM98/sugarizer-school-port
 You can read more about the setup process in this [documentation](https://github.com/NikhilM98/sugarizer-school-portal/blob/master/scripts/README.md).
 
 ## Backup and Restore data using MGOB
-[MGOB](https://github.com/stefanprodan/mgob/) is a MongoDB backup automation tool built with Go. It features like scheduled backups, local backups retention, upload to S3 Object Storage (Minio, AWS, Google Cloud, Azure) and upload to gcloud storage.
+[MGOB](https://github.com/stefanprodan/mgob/) is a MongoDB backup automation tool built with Go. It features scheduled backups, local backups retention, upload to S3 Object Storage (Minio, AWS, Google Cloud, Azure) and upload to gcloud storage.
 
-To setup MGOB to automate MongoDB backups on Google Kubernetes Engine, follow these step by step instructions:
+To setup MGOB to automate MongoDB backups, follow these instructions:
 
-Requirements:
-- GKE cluster minimum version v1.8
-- kubctl admin config
+### Obtain Cloud Storage Credentials
+If you want to upload the backups on cloud storage then your need to obtain corresponding cloud storage credentials.
+- For `S3`, create a S3 bucket and store its credentials in the YAML file.
+- For `azure storage`, create an Azure Storage Container and store its credentials in the YAML file.
+- For `gcloud`, create a GCloud Bucket and create a Service Account with Storage Permission. Enter the service account and bucket deails in the YAML file.
 
-### Store Service Account key as a secret
-First, you need to create a GCP service account key from the API & Services page. In case you already have one, then download the JSON file and rename it to `key.json`.
-
-Store the JSON file as a secret:
-```bash
-kubectl create secret generic service-acc-secret --from-file=key.json
-```
+Note: In case of GCloud storage, you need to enable `storage.objects` access to the service account in order to allow objects creation in the bucket.
 
 ### MGOB Installation
 Clone the MGOB repository:
@@ -73,17 +68,7 @@ sugarizer-database.yml: |
 secret:
   - name: service-acc-secret
 ```
-An example YAML configuration is available as [mgob-gke.yaml](examples/mgob-gke.yaml).
-
-### Backup to GCP Storage Bucket (Optional)
-For long term backup storage, you could use a GCP Bucket since is a cheaper option than keeping all backups on disk.    
-You need to enable `storage.objects` acccess to the service account in order to allow objects creation in the bucket.    
-From the GCP web UI, navigate to Storage and create a regional bucket named `ssp-backup` (Or any other name if it's taken). Set the bucket and secret name in the backup-plan in the `values.yaml` file.
-```bash
-gcloud:
-  bucket: "ssp-backup"
-  keyFilePath: /secret/service-acc-secret/key.json
-```
+An example YAML configuration is available as [mgob.yaml](examples/mgob.yaml).
 
 ### Restoring data from backup
 In order to restore data to the Sugarizer School Portal database, you need to open a shell in MGOB pod. The backups are available in `/storage/sugarizer-database/` directory inside the pod (where `sugarizer-database` was the name of our backup plan).
