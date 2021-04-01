@@ -14,9 +14,11 @@ The Sugarizer School Portal consists of multiple components:
 
 [**Sugarizer School Portal Server**](https://github.com/nikhilm98/sugarizer-school-portal-server) provides a web interface for the Sugarizer School Portal. It provides a role-based authentication for Clients, Moderators and Administrators, where the users can request for deployment by filling a simple form. The users can also monitor their deployment requests. The deployment administrators can monitor the users and approve/reject/deploy the requested deployments. It also allows the users to create admin accounts on their Sugarizer Server deployment directly from the interface
 
-[**Sugarizer Chart**](https://github.com/nikhilm98/sugarizer-chart) is a collection of [Helm](https://helm.sh/) Charts for setting up [Sugarizer Server](https://github.com/llaske/sugarizer-server) deployment on a Kubernetes cluster. You can deploy multiple Sugarizer Server instances by editing the values of the YAML file and running simple `helm install` command. The Sugarizer Server instances are accessible from the browser by opening the `hostName` URL. Currently, it supports two providers:
-- [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine) (GKE) - [README](https://github.com/NikhilM98/sugarizer-chart/tree/master/gke-environment)
-- [Microk8s](https://microk8s.io) (For bare-metal Kubernetes cluster) - [README](https://github.com/NikhilM98/sugarizer-chart/tree/master/microk8s-environment)
+[**Sugarizer Chart**](https://github.com/nikhilm98/sugarizer-chart) is a collection of [Helm](https://helm.sh/) Charts for setting up [Sugarizer Server](https://github.com/llaske/sugarizer-server) deployment on a Kubernetes cluster. You can deploy multiple Sugarizer Server instances by editing the values of the YAML file and running simple `helm install` command. The Sugarizer Server instances are accessible from the browser by opening the `hostName` URL. Currently, it supports four providers:
+- [Amazon Elastic Kubernetes Service](https://aws.amazon.com/eks/) (Amazon EKS)
+- [Azure Kubernetes Service](https://azure.microsoft.com/en-in/services/kubernetes-service/) (AKS)
+- [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine) (GKE)
+- [Microk8s](https://microk8s.io) (For bare-metal Kubernetes cluster)
 
 The **Sugarizer School Portal Server** uses **Sugarizer Chart** to install a deployment in the Sugarizer School Portal Cluster.
 
