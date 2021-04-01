@@ -25,7 +25,8 @@ sh setup.sh -p <provider> -s <true/false>
 # <providers> can be aws/azure/gke 
 ```
 
-**Provider (-p) :** Cloud provider for the Kubernetes Cluster. Options: `azure`, `gke`.
+**Provider (-p) :** Cloud provider for the Kubernetes Cluster. Options: `aws`, `azure`, `gke`.
+
 **SSL (-s) :** Whether to install HTTPS components. Options: `true`, `false`.
 
 After setting up the environment, the setup will pause.
