@@ -1,0 +1,2 @@
+startupProbe:
+  successThreshold: 1
