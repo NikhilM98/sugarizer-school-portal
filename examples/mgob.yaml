@@ -42,7 +42,7 @@ configMap:
     # Add each plan as per below.
     sugarizer-database.yml: |
       target:
-        host: "mymongodb-mongodb-replicaset-0.mymongodb-mongodb-replicaset.default,mymongodb-mongodb-replicaset-1.mymongodb-mongodb-replicaset.default,mymongodb-mongodb-replicaset-2.mymongodb-mongodb-replicaset.default"
+        host: "ssp-mongodb-mongodb-replicaset-0.ssp-mongodb-mongodb-replicaset.default,ssp-mongodb-mongodb-replicaset-1.ssp-mongodb-mongodb-replicaset.default,ssp-mongodb-mongodb-replicaset-2.ssp-mongodb-mongodb-replicaset.default"
         port: 27017
         database: ""
       scheduler:
