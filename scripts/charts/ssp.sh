@@ -18,7 +18,7 @@ do
     esac
 done
 
-cmd="helm install ssp ssp/school-portal-chart -f charts/ssp-values.yaml";
+cmd="helm install ssp ssp/school-portal-chart --version 0.3.3 -f charts/ssp-values.yaml";
 
 if [ -z ${provider+x} ]; then # provider is not set
     printf "${YELLOW}\nProvider (-p) is not set | Taking the value of Provider from ${BLUE}'ssp-values.yaml'${YELLOW}.\n${NC}";
