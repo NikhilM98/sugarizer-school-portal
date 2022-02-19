@@ -10,9 +10,11 @@ YELLOW='\033[0;33m';
 BLUE='\033[0;34m';
 NC='\033[0m';
 
-printf "${YELLOW}Checking for MongoDB-Replicaset with releasename: ${BLUE}mymongodb\n${NC}";
-helm status mymongodb >/dev/null 2>&1 || {
+printf "${YELLOW}Checking for MongoDB-Replicaset with releasename: ${BLUE}ssp-mongodb\n${NC}";
+helm status ssp-mongodb >/dev/null 2>&1 || {
     printf >&2 "${BLUE}Chart not found. Installing MongoDB-Replicaset...\n${NC}";
-    helm install mymongodb stable/mongodb-replicaset -f charts/mongodb-values.yaml;
+    helm repo add bitnami https://charts.bitnami.com/bitnami;
+    helm repo update;
+    helm install ssp-mongodb bitnami/mongodb -f charts/mongodb-values.yaml;
 }
 printf "${GREEN}Finished checking for MongoDB-Replicaset\n\n${NC}";
