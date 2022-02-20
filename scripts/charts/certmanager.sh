@@ -16,6 +16,6 @@ helm status cert-manager --namespace=cert-manager >/dev/null 2>&1 || {
     kubectl create namespace cert-manager;
     helm repo add jetstack https://charts.jetstack.io;
     helm repo update;
-    helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v0.15.1 --set installCRDs=true;
+    helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v1.7.1 --set installCRDs=true;
 }
 printf "${GREEN}Finished checking for Cert-Manager\n\n${NC}";
