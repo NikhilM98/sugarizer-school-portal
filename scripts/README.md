@@ -57,7 +57,7 @@ The setup checks and installs these prerequisites if they're not already present
 - [Helm 3](https://helm.sh/)
 
 It then checks and installs the required Helm charts:
-- [MongoDB Replicaset](https://github.com/helm/charts/tree/master/stable/mongodb-replicaset) as `mymongodb` in `default` namespace.
+- [MongoDB Replicaset](https://github.com/bitnami/charts/tree/master/bitnami/mongodb) as `ssp-mongodb` in `default` namespace.
 - [Kubernetes-Reflector](https://github.com/emberstack/kubernetes-reflector) as `reflector` in `default` namespace. - (If SSL is `true`)
 - [NGINX Ingress Controller](https://github.com/nginxinc/kubernetes-ingress/) as `ingress-nginx` in `default` namespace.
 - [Cert-Manager](https://cert-manager.io/docs/) as `cert-manager` in `cert-manager` namespace. - (If SSL is `true`)
